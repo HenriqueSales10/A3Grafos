@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+public class Principal
+{
+    static void Main(string[] args)
+    {
+        Grafo grafo = new Grafo();
+        LerArquivo(@"D:\\Usuario\\OneDrive\\Documents\ArquivoA3Grafo.txt", grafo);
+
+        int opcao = 0;
+
+        while (opcao != 4)
+        {
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1) Calcular a distância entre dois pontos");
+            Console.WriteLine("2) Criar uma Pilha e listar valores");
+            Console.WriteLine("3) Criar uma Fila e listar valores");
+            Console.WriteLine("4) Sair");
+            Console.Write("Escolha uma opção: ");
+
+            if (int.TryParse(Console.ReadLine(), out opcao))
+            {
+                switch (opcao)
+                {
+                    case 1:
+                        Grafo.CalcularDistancia(grafo);
+                        break;
+                    case 2:
+                        FilaEpilha.CriarPilha();
+                        break;
+                    case 3:
+                        FilaEpilha.CriarFila(grafo);
+                        break;
+                    case 4:
+                        Console.WriteLine("Saindo do programa.");
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida. Escolha novamente.");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida. Escolha novamente.");
+            }
+        }
+    }
+
+    static void LerArquivo(string nomeArquivo, Grafo grafo)
+    {
+        try
+        {
+            using (StreamReader sr = new StreamReader(nomeArquivo))
+            {
+                string linha;
+                while ((linha = sr.ReadLine()) != null)
+                {
+                    string[] dados = linha.Split(';');
+                    if (dados.Length >= 3)
+                    {
+                        string cidade1 = dados[0];
+                        string cidade2 = dados[1];
+                        string custo = dados[2];
+                        int distancia = Convert.ToInt32(custo);
+
+                        grafo.AdicionarAresta(cidade1, cidade2, distancia);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("O arquivo não pôde ser lido: " + e.Message);
+        }
+    }
+}
