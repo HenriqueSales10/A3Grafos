@@ -1,0 +1,79 @@
+using System.Collections.Generic;
+using System.IO;
+using System;
+
+public class FilaEpilha
+{
+    public static void CriarPilha()
+    {
+        Console.WriteLine("Criando Pilha...");
+
+        // Pilha para armazenar os valores do arquivo
+        Stack<string> pilha = new Stack<string>();
+
+        try
+        {
+            using (StreamReader sr = new StreamReader(@"D:\\Usuario\\OneDrive\\Documents\\ArquivoA3Grafo.txt"))
+            {
+                string linha;
+                while ((linha = sr.ReadLine()) != null)
+                {
+                    string[] dados = linha.Split(';');
+                    // Verifica se há pelo menos três elementos na linha
+                    if (dados.Length >= 3)
+                    {
+                        // Armazena o terceiro valor na pilha
+                        string valor = dados[2];
+                        pilha.Push(valor);
+                    }
+                }
+            }
+
+            Console.WriteLine("Valores na Pilha:");
+            foreach (var valor in pilha)
+            {
+                Console.WriteLine(valor);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Não foi possível criar a pilha. Erro: " + e.Message);
+        }
+    }
+
+    public static void CriarFila(Grafo grafo)
+    {
+        Console.WriteLine("Criando Fila...");
+
+        Queue<string> fila = new Queue<string>();
+
+        try
+        {
+            using (StreamReader sr = new StreamReader(@"D:\\Usuario\\OneDrive\\Documents\\ArquivoA3Grafo.txt"))
+            {
+                string linha;
+                while ((linha = sr.ReadLine()) != null)
+                {
+                    string[] dados = linha.Split(';');
+                    // Verifica se há pelo menos três elementos na linha
+                    if (dados.Length >= 3)
+                    {
+                        // Armazena o terceiro valor na fila
+                        string valor = dados[2];
+                        fila.Enqueue(valor);
+                    }
+                }
+            }
+
+            Console.WriteLine("Valores na Fila:");
+            foreach (var valor in fila)
+            {
+                Console.WriteLine(valor);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Não foi possível criar a fila. Erro: " + e.Message);
+        }
+    }
+}
